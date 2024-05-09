@@ -1,8 +1,8 @@
 #![allow(clippy::print_stdout)]
 
 use anyhow::{bail, Context};
-use mdbook_i18n_helpers::{extract_messages, ExtractedMessage};
-use std::{collections::HashMap, fs, path::Path};
+use mdbook_i18n_helpers::extract_messages;
+use std::{fs, path::Path};
 
 fn main() -> anyhow::Result<()> {
     let args = std::env::args().collect::<Vec<_>>();
@@ -16,15 +16,15 @@ fn main() -> anyhow::Result<()> {
         .with_context(|| format!("Could not read {:?}", &en_filename))?;
     // println!("en_file: {:?}", en_file);
     let en_messages = extract_messages(&en_file);
-    println!("en: {en_messages:#?}");
-    println!("en: {:#?}", en_messages.len());
+    // println!("en: {en_messages:#?}");
+    println!("{en_filename}: {:#?}", en_messages.len());
 
     let xx_file = fs::read_to_string(Path::new(xx_filename))
         .with_context(|| format!("Could not read {:?}", &xx_filename))?;
     // println!("xx_file: {:?}", xx_file);
     let xx_messages = extract_messages(&xx_file);
     // println!("xx: {xx_messages:#?}");
-    println!("xx: {:#?}", xx_messages.len());
+    println!("{xx_filename}: {:#?}", xx_messages.len());
 
     // let mut map = HashMap::new();
     // for (k, v) in en_messages {
